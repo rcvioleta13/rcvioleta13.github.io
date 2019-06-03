@@ -6,8 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Time Calculator</title>
+    <link rel="shortcut icon" href="https://img.icons8.com/ios/50/000000/overtime-filled.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background: url('./time-bg.jpg') top center no-repeat;
+            background-size: cover;
+        }
+    </style>
 </head>
 
 <body style="background-color: #000;">
@@ -18,25 +25,19 @@
                 <div class="row">
                     <form id="myform">
                         <div class="col-lg-12">
-                            <div class="form-group">
-                                <input type="date" name="date" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
                             <div class="row">
-                                <div class="col-lg-3">
+                                <div class="col-sm-3 col-md-3 col-lg-3">
                                     <strong>Start Time:</strong>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-sm-3 col-md-3 col-lg-3">
                                     <input type="text" name="sth" pattern="\d*" maxlength="2" class="form-control"
                                         placeholder="HH">
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-sm-3 col-md-3 col-lg-3">
                                     <input type="text" name="stm" pattern="\d*" maxlength="2" class="form-control"
                                         placeholder="MM">
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-sm-3 col-md-3 col-lg-3">
                                     <select name="stp" id="" class="form-control">
                                         <option value="" disabled selected>am/pm</option>
                                         <option value="AM">AM</option>
@@ -49,18 +50,18 @@
 
                         <div class="col-lg-12 mt-3">
                             <div class="row">
-                                <div class="col-lg-3">
+                                <div class="col-sm-3 col-md-3 col-lg-3">
                                     <strong>End Time:</strong>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-sm-3 col-md-3 col-lg-3">
                                     <input type="text" name="eth" pattern="\d*" maxlength="2" class="form-control"
                                         placeholder="HH">
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-sm-3 col-md-3 col-lg-3">
                                     <input type="text" name="etm" pattern="\d*" maxlength="2" class="form-control"
                                         placeholder="MM">
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-sm-3 col-md-3 col-lg-3">
                                     <select name="etp" id="" class="form-control">
                                         <option value="" disabled selected>am/pm</option>
                                         <option value="AM">AM</option>
@@ -89,15 +90,12 @@
             event.preventDefault()
 
             const target = event.target
-            const date = target.date.value
             const startTime = `${target.sth.value}:${target.stm.value} ${target.stp.value}`
             const endTime = `${target.eth.value}:${target.etm.value} ${target.etp.value}`
-
-            console.log('start', startTime)
-            console.log('end', endTime)
-
-            const timeStart = new Date(date + " " + startTime)
-            const timeEnd = new Date(date + " " + endTime)
+            const today = new Date();
+            const todayFormatted = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`
+            const timeStart = new Date(todayFormatted + " " + startTime)
+            const timeEnd = new Date(todayFormatted + " " + endTime)
             const difference = (timeEnd - timeStart) / 60000
             const mins = difference % 60
             const hours = (difference - mins) / 60
@@ -106,15 +104,12 @@
                 parent.removeChild(parent.firstChild)
             }
 
-            const inputList = ['date', 'sth', 'stm', 'stp', 'eth', 'etm', 'etp']
+            const inputList = ['sth', 'stm', 'stp', 'eth', 'etm', 'etp']
             const errors = []
 
             inputList.forEach(input => {
                 if (!target[input].value) {
                     switch (target[input].name) {
-                        case 'date':
-                            errors.push('Date')
-                            break
                         case 'sth':
                             errors.push('Start Time (hour)')
                             break
