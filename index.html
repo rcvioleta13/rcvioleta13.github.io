@@ -139,7 +139,8 @@
                 displayDiff.appendChild(document.createTextNode(`Missing information: ${errors.join(', ')}`))
             } else {
                 displayDiff.className = 'alert-info p-4 mt-4 mb-4 text-center'
-                displayDiff.appendChild(document.createTextNode(`Difference: ${hours} hours and ${mins} minutes`))
+                const minutes = mins > 0 ? `and ${mins} minutes` : ''
+                displayDiff.appendChild(document.createTextNode(`Difference: ${hours} hours ${minutes}`))
                 inputList.forEach(input => target[input].value = '') // clear existing data
             }
 
